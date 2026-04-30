@@ -6,7 +6,7 @@ const { Pool } = require("pg");
 const app = express();
 const PORT = 5000;
 
-// Base URL (important for deployment later)
+// Base URL (for local + future deployment)
 const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
 
 // PostgreSQL connection
@@ -22,6 +22,7 @@ const pool = new Pool({
 app.use(cors());
 app.use(express.json());
 
+// Test route
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
@@ -53,15 +54,21 @@ app.post("/shorten", async (req, res) => {
 app.get("/:id", async (req, res) => {
   const shortId = req.params.id;
 
-  console.log("Redirect request:", shortId);
-
   try {
+    // Get original URL
     const result = await pool.query(
       "SELECT original_url FROM urls WHERE short_id = $1",
       [shortId]
     );
 
     if (result.rows.length > 0) {
+      // Increase click count
+      await pool.query(
+        "UPDATE urls SET clicks = clicks + 1 WHERE short_id = $1",
+        [shortId]
+      );
+
+      // Redirect user
       return res.redirect(result.rows[0].original_url);
     }
 
