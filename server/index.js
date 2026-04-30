@@ -1,8 +1,9 @@
 require("dotenv").config();
-import express, { json } from "express";
-import cors from "cors";
-import { nanoid } from "nanoid";
-import { Pool } from "pg";
+const express = require("express");
+const { json } = require("express");
+const cors = require("cors");
+const { nanoid } = require("nanoid");
+const { Pool } = require("pg");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
