@@ -1,26 +1,27 @@
-const express = require("express");
-const cors = require("cors");
-const { nanoid } = require("nanoid");
-const { Pool } = require("pg");
+require("dotenv").config();
+import express, { json } from "express";
+import cors from "cors";
+import { nanoid } from "nanoid";
+import { Pool } from "pg";
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Base URL (for local + future deployment)
 const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
 
 // PostgreSQL connection
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "url_shortener",
-  password: "qwerty025",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 // Test route
 app.get("/", (req, res) => {
