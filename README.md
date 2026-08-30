@@ -206,11 +206,7 @@ created_at    | TIMESTAMP         | Creation timestamp
 
 This project is open source and available under the MIT License.
 
-## Support
-
-For issues or questions, please open an issue on GitHub or contact the maintainers.
-
 ---
 
-**Author**: Pkay2151  
+**Author**: Emmanuel Nunoo Mensah 
 **Repository**: https://github.com/Pkay2151/URL-Shortener
